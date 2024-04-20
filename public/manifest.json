@@ -1,9 +1,20 @@
 {
   "manifest_version": 3,
-  "name": "LLM Prompt",
-  "description": "A quick way to fetch prompts powered by AI.",
+  "name": "Agent Workflow Prompt",
+  "description": "A way to fetch prompts with agents and workflows.",
   "version": "0.0.1",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://gemini.google.com/app",
+        "https://chat.openai.com/",
+        "https://www.llama2.ai/"
+      ],
+      "js": ["content.js"]
+    }
+  ],
   "action": {
     "default_popup": "index.html"
-  }
+  },
+  "permissions": ["storage", "scripting", "tabs", "activeTab"]
 }
