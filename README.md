@@ -1,7 +1,17 @@
 # Agent Workflow Prompt
+A google-chrome extension that uses **Large Language Models (LLMs)** to help users or developers to get better responses to their prompts to the LLMs.
 [<img src="/public/chainsaw.png" alt="chainsaw" width="50"/>](/public/chainsaw.png)
 
-A google-chrome extension that uses **Large Language Models (LLMs)** to help users or developers to get better responses to their prompts to the LLMs.
+
+## Snapshot
+![Prompt](/public/prompt.png)
+
+The extension in a nutshell.
+
+![Response](/public/response.png)
+
+The response from the agent.
+
 
 ## Agents
 The Agent is a Large Language Model (LLM) that can be used to help users in different scenarios. Currently this extension uses GPT3.5, and Gemini, as the LLMs. In the future, we plan to use other LLMs as well like LLaMA. 
@@ -20,6 +30,4 @@ There are four main workflows that is google-chorme extension can be used for:
 ## Persistence
 The extension has the option to save the user's prompts and responses as well as
 the agent into a database called **Airtable**. This is useful for the agent to learn from its past interactions and improve its responses.
-
-
 
