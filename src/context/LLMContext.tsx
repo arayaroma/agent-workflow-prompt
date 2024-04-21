@@ -1,38 +1,41 @@
-import React, { ReactNode, createContext, useContext, useState } from "react";
+import React, {
+  ReactNode,
+  createContext,
+  useContext,
+  useMemo,
+  useReducer,
+} from "react";
+import reducer from "../ts/reducer";
+import { Action, LLMState } from "../../types";
 
-type LLMState = {
-  agent: string;
-  setAgent: (agent: string) => void;
-  workflow: string;
-  setWorkflow: (workflow: string) => void;
-};
-
-export const LLMContext = createContext<LLMState | null>({
-  agent: "",
-  workflow: "",
-  setAgent: () => {},
-  setWorkflow: () => {},
-});
-
-const defaultLLMState: LLMState = {
+interface ContextType {
+  state: LLMState;
+  dispatch: React.Dispatch<Action>;
+}
+const initialState: LLMState = {
   agent: "gemini",
   workflow: "",
+  response: "",
   setAgent: () => {},
   setWorkflow: () => {},
+  setResponse: () => {},
 };
+
+export const LLMContext = createContext<ContextType | null>(null);
 
 export const LLMProvider = ({ children }: { children: ReactNode }) => {
-  const [agent, setAgent] = useState(defaultLLMState.agent);
-  const [workflow, setWorkflow] = useState(defaultLLMState.workflow);
-  const llmState: LLMState = {
-    agent,
-    setAgent,
-    workflow,
-    setWorkflow,
-  };
-
-  return <LLMContext.Provider value={llmState}>{children}</LLMContext.Provider>;
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const contextValue = useMemo(() => {
+    return { state, dispatch };
+  }, [state, dispatch]);
+  return (
+    <LLMContext.Provider value={contextValue}>{children}</LLMContext.Provider>
+  );
 };
 
-export const useLLMContext = () => useContext(LLMContext)!;
+export const useLLMContext = () => {
+  const { state, dispatch } = useContext(LLMContext)!;
+  return { state, dispatch };
+};
+
 export default LLMProvider;
