@@ -16,5 +16,8 @@
   "action": {
     "default_popup": "index.html"
   },
+  "icons": {
+    "128": "chainsaw.png"
+  },
   "permissions": ["storage", "scripting", "tabs", "activeTab"]
 }
