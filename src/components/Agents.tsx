@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { useLLMContext } from "../context/LLMContext";
 
-const LLMContainer = () => {
-  const { agent, setAgent } = useLLMContext();
-  const [clickedButton, setClickedButton] = useState(agent);
+const Agents = () => {
+  const { state, dispatch } = useLLMContext();
+  const [clickedButton, setClickedButton] = useState(state.agent);
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const buttonId = e.currentTarget.id;
     setClickedButton((prev) => (buttonId === prev ? "" : buttonId));
-    setAgent(buttonId);
+    dispatch({ type: "SET_AGENT", payload: buttonId });
   };
 
   return (
@@ -62,4 +62,4 @@ const LLMContainer = () => {
   );
 };
 
-export default LLMContainer;
+export default Agents;
