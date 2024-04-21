@@ -4,18 +4,20 @@ const base = new Airtable({
   apiKey: import.meta.env.VITE_AIRTABLE_API_KEY,
 }).base(import.meta.env.VITE_AIRTABLE_BASE_ID || "");
 
-type Record = {
+export type Record = {
   agent: string;
   prompt: string;
+  response: string;
 };
 
-function createRecord(record: Record) {
+function create(record: Record) {
   base("prompts").create(
     [
       {
         fields: {
           agent: record.agent,
           prompt: record.prompt,
+          response: record.response,
         },
       },
     ],
@@ -29,4 +31,4 @@ function createRecord(record: Record) {
 }
 
 export default base;
-export { createRecord };
+export { create };
