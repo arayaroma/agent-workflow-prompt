@@ -3,8 +3,8 @@ import React, { ReactNode, createContext, useContext, useState } from "react";
 type LLMState = {
   agent: string;
   setAgent: (agent: string) => void;
-  workflow?: string;
-  setWorkflow?: (workflow: string) => void;
+  workflow: string;
+  setWorkflow: (workflow: string) => void;
 };
 
 export const LLMContext = createContext<LLMState | null>({
