@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { useLLMContext } from "../context/LLMContext";
 
 const Workflows = () => {
-  const { workflow, setWorkflow } = useLLMContext();
-  const [clickedButton, setClickedButton] = useState(workflow);
+  const { state, dispatch } = useLLMContext();
+  const [clickedButton, setClickedButton] = useState(state.workflow);
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const buttonId = e.currentTarget.id;
     setClickedButton((prev) => (buttonId === prev ? "" : buttonId));
-    setWorkflow(buttonId);
+    dispatch({ type: "SET_WORKFLOW", payload: buttonId });
   };
 
   return (
