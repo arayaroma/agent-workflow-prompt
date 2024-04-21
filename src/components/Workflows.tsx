@@ -9,7 +9,7 @@ const Workflows = () => {
     e.preventDefault();
     const buttonId = e.currentTarget.id;
     setClickedButton((prev) => (buttonId === prev ? "" : buttonId));
-    setWorkflow!(buttonId);
+    setWorkflow(buttonId);
   };
 
   return (
