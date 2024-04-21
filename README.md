@@ -28,7 +28,8 @@ There are four main workflows that is google-chorme extension can be used for:
 3. **Planning**, where the agent plans a sequence of actions to achieve a goal.
 4. **Multi-Agent**, where the agent can act like many agents at once.
 
-## Persistence
+## Airtable Integration
 The extension has the option to save the user's prompts and responses as well as
 the agent into a database called **Airtable**. This is useful for the agent to learn from its past interactions and improve its responses.
 
+![Airtable](/public/airtable.png)
