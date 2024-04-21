@@ -1,16 +1,15 @@
-import React, { useState } from "react";
-import LLMContainer from "./components/LLMContainer";
-import Workflows from "./components/Workflows";
-import { useLLMContext } from "./context/LLMContext";
-import { chooseWorkflow } from "./ts/workflow";
-import { chooseAgent } from "./ts/agent";
-import { createRecord } from "./ts/airtable";
+import React, { Suspense, lazy, useState } from "react";
+import Agents from "./Agents";
+import Workflows from "./Workflows";
+import { useLLMContext } from "../context/LLMContext";
+import { chooseWorkflow } from "../ts/workflow";
+import { chooseAgent } from "../ts/agent";
+import Skeleton from "./Skeleton";
 
-export const Context = React.createContext({});
-
+const Result = lazy(() => import("./Result"));
 const Form = () => {
   const [form, setForm] = useState({ search: "" });
-  const { agent, workflow } = useLLMContext();
+  const { state } = useLLMContext();
 
   const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setForm({ search: e.target.value });
@@ -19,11 +18,10 @@ const Form = () => {
   const handleFetch = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     chrome.storage.local.set({
-      agent: agent,
-      prompt: chooseWorkflow(form.search, workflow),
+      agent: state.agent,
+      prompt: chooseWorkflow(form.search, state.workflow),
     });
-    createRecord({ agent: agent, prompt: form.search });
-    window.open(chooseAgent(agent), "_blank", "popup");
+    window.open(chooseAgent(state.agent), "_blank", "popup");
   };
 
   return (
@@ -33,10 +31,11 @@ const Form = () => {
           Agent Workflow Prompt
         </h1>
 
-        <LLMContainer />
+        <Agents />
         <textarea
           onChange={handleInput}
           className="w-full text-2xl rounded-md h-32 mb-2 bg-neutral-800 text-white p-2"
+          placeholder="Enter your prompt here"
         />
 
         <Workflows />
@@ -47,6 +46,9 @@ const Form = () => {
         >
           Search
         </button>
+        <Suspense fallback={<Skeleton />}>
+          <Result />
+        </Suspense>
       </div>
     </form>
   );
