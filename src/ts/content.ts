@@ -1,8 +1,6 @@
 function setPrompt() {
-  chrome.storage.local.get(["prompt", "agent"], (result) => {
-    const { prompt, agent } = result;
-    console.log("Prompt: ", prompt);
-    console.log("Agent: ", agent);
+  chrome.storage.local.get(["agent", "prompt"], (result) => {
+    const { agent, prompt } = result;
     if (agent === "gemini") {
       const geminiPromptId = document.querySelector<HTMLDivElement>(
         "rich-textarea .ql-editor"
