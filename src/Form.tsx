@@ -4,6 +4,7 @@ import Workflows from "./components/Workflows";
 import { useLLMContext } from "./context/LLMContext";
 import { chooseWorkflow } from "./ts/workflow";
 import { chooseAgent } from "./ts/agent";
+import { createRecord } from "./ts/airtable";
 
 export const Context = React.createContext({});
 
@@ -18,17 +19,18 @@ const Form = () => {
   const handleFetch = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     chrome.storage.local.set({
-      prompt: chooseWorkflow(form.search, workflow),
       agent: agent,
+      prompt: chooseWorkflow(form.search, workflow),
     });
-    window.open(chooseAgent(agent), "_blank");
+    createRecord({ agent: agent, prompt: form.search });
+    window.open(chooseAgent(agent), "_blank", "popup");
   };
 
   return (
     <form className="flex justify-center bg-neutral-700 min-w-[400px]">
       <div className="justify-center items-center p-4">
-        <h1 className="text-4xl mb-4 text-white font-bold text-center">
-          AI Prompt Tool
+        <h1 className="text-2xl mb-4 text-white font-bold text-center">
+          Agent Workflow Prompt
         </h1>
 
         <LLMContainer />
