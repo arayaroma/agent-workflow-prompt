@@ -22,6 +22,7 @@ function setPrompt() {
         );
         if (sendButton) {
           sendButton.click();
+          scrapLLMResponse();
         }
       }
     }
@@ -29,6 +30,7 @@ function setPrompt() {
       const chatPrompt = document.getElementById(
         "prompt-textarea"
       ) as HTMLTextAreaElement;
+
       if (chatPrompt) {
         chatPrompt.value = prompt;
         let inputEvent = new Event("input", { bubbles: true });
@@ -37,6 +39,7 @@ function setPrompt() {
           document.querySelector<HTMLButtonElement>("button.absolute");
         if (sendButton) {
           sendButton.click();
+          scrapLLMResponse();
         }
       }
     }
@@ -46,5 +49,14 @@ function setPrompt() {
   });
 }
 
+async function scrapLLMResponse() {
+  setTimeout(() => {
+    const paragraphElement =
+      document.querySelector<HTMLDivElement>("div.markdown");
+    const response = paragraphElement?.innerText;
+    chrome.runtime.sendMessage({ type: "LLM_RESPONSE", response });
+    chrome.storage.local.set({ response });
+  }, 15000);
+}
+
 setPrompt();
-chrome.storage.local.remove(["prompt"]);
