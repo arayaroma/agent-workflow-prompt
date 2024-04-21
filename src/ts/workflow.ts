@@ -1,4 +1,7 @@
-function chooseWorkflow(prompt: string, workflow: string | undefined) {
+function chooseWorkflow(prompt: string, workflow: string) {
+  if (workflow === "" || undefined) {
+    return prompt;
+  }
   if (workflow === "reflection") {
     return reflection(prompt);
   }
